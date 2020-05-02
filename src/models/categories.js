@@ -1,17 +1,43 @@
+import axios from 'axios';
+
 class Category {
-  constructor(breeds = {}) {
-    this.filterList = [];
-    const keys = Object.keys(breeds);
-    this.collection = keys.map(name => {
-      return {
-        name: name,
-        selected: false,
-        subCategory: breeds[name].map(subcat => ({
-          selected: false,
-          name: subcat
-        }))
-      }
+
+  constructor() {
+    this.request = axios.create({
+      baseURL: "https://dog.ceo/api"
     });
+  }
+
+  async handleResponse(_request) {
+    try {
+      const {
+        data
+      } = await _request;
+      if (data.status !== "success") throw new Error(data.status);
+      return data.message;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  getAllBreeds() {
+    return this.handleResponse(this.request.get('breeds/list/all'));
+  }
+
+  async getMultipleBreeds(elementToSearch) {
+
+    const elementsList = Category.getElementToRequest(elementToSearch);
+
+    const pictures = await Promise.all(
+      elementsList.map(name => this.handleResponse(
+        this.request.get(`breed/${name}/images`)
+      ))
+    );
+
+    return pictures.map((picture, index) => ({
+      title: elementsList[index],
+      pictures: picture
+    }));
   }
 
   static parse(breeds) {

@@ -9,6 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useGlobalDispatch } from '../../reducers';
+import { GlobalStateContext } from '../../context';
+import actions from '../../actions';
 
 const drawerWidth = 240;
 
@@ -50,12 +55,23 @@ const useStyles = makeStyles((theme) => ({
 
 function ResponsiveDrawer(props) {
   const { window } = props;
+  const dispatch = useGlobalDispatch();
   const classes = useStyles();
   const theme = useTheme();
+  const { pictureList } = React.useContext(GlobalStateContext);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleClose = (col) => {
+    setAnchorEl(null);
+    dispatch({
+      type: actions.SET_COLUMN,
+      value: col
+    });
   };
 
   const drawer = (
@@ -82,9 +98,33 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <div className={classes.title}>{props.title}</div>
-          <IconButton aria-label="display more actions" edge="end" color="inherit">
-            <MoreIcon />
-          </IconButton>
+          {
+            pictureList.length > 0 && <IconButton aria-label="display more actions"
+              edge="end"
+              onClick={(event) => {
+                console.log('event', event.currentTarget);
+                if (anchorEl === null)
+                  setAnchorEl(event.currentTarget)
+                else
+                  setAnchorEl(null)
+              }}
+              color="inherit">
+              <MoreIcon />
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+              >
+                <MenuItem onClick={() => handleClose(1)}>1 column</MenuItem>
+                <MenuItem onClick={() => handleClose(2)}>2 columns</MenuItem>
+                <MenuItem onClick={() => handleClose(3)}>3 columns</MenuItem>
+                <MenuItem onClick={() => handleClose(5)}>5 columns</MenuItem>
+                <MenuItem onClick={() => handleClose(8)}>8 columns</MenuItem>
+              </Menu>
+            </IconButton>
+          }
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

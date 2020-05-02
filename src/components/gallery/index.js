@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   GridList,
   GridListTile,
@@ -27,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Gallery = ({ pictureList, col, emptyMessage }) => {
-
   const classes = useStyles();
 
   return pictureList.length === 0 ? <Grid container
@@ -39,7 +39,7 @@ const Gallery = ({ pictureList, col, emptyMessage }) => {
     </Grid>
     <Grid item xs={12} className={classes.textCenter}>
       <Typography>
-        Gallery empty. Please select a breed
+        {emptyMessage}
       </Typography>
     </Grid>
   </Grid>
@@ -48,7 +48,7 @@ const Gallery = ({ pictureList, col, emptyMessage }) => {
       {
         pictureList.map((element) =>
           element.pictures.map((picture) => <GridListTile key={picture} cols={1}>
-            <img src={picture} alt={picture} />
+            <img src={picture} alt={`image no available`} />
             <GridListTileBar
               title={element.title}
               titlePosition="top"
@@ -59,6 +59,25 @@ const Gallery = ({ pictureList, col, emptyMessage }) => {
         )}
     </GridList>;
 
+}
+
+Gallery.propTypes = {
+  pictureList: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      pictures: PropTypes.arrayOf(
+        PropTypes.string.isRequired
+      )
+    }),
+  ).isRequired,
+  col: PropTypes.number,
+  emptyMessage: PropTypes.string
+};
+
+Gallery.defaultProps = {
+  pictureList: [],
+  emptyMessage: 'Gallery empty. Please select a breed',
+  col: 3
 }
 
 export default Gallery;

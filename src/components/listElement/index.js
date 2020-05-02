@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NestedList = ({ element, onClick }) => {
+const ListElement = ({ element, onClick }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -42,10 +43,7 @@ const NestedList = ({ element, onClick }) => {
         <ListItemIcon>
           <Checkbox
             checked={element.selected}
-            onClick={() => {
-              // setSelected(!selected);
-              onClick(element.name, !element.selected);
-            }}
+            onClick={() => onClick(element.name, !element.selected)}
             name="checkedB"
             color="primary"
           />
@@ -56,10 +54,19 @@ const NestedList = ({ element, onClick }) => {
       {element.subCategory.length > 0 && <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {
-            element.subCategory.map((child, i) => <SingleElement
-              key={`${element.name}-${child.name}`}
-              element={child} onClick={() => onClick(`${element.name},${child.name}`, !child.selected)}
-              className={classes.nested} />)
+            element.subCategory.map((child) =>
+              <ListItem key={`${element.name},${child.name}`} className={classes.nested}>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={child.selected}
+                    onClick={() => onClick(`${element.name},${child.name}`, !child.selected)}
+                    name="checkedB"
+                    color="primary"
+                  />
+                </ListItemIcon>
+                <ListItemText primary={child.name} />
+              </ListItem>
+            )
           }
         </List>
       </Collapse>}
@@ -67,23 +74,22 @@ const NestedList = ({ element, onClick }) => {
   );
 }
 
+ListElement.propTypes = {
+  element: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    selected: PropTypes.bool.isRequired,
+    subCategory: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        selected: PropTypes.bool.isRequired,
+      })
+    )
+  }).isRequired,
+  onClick: PropTypes.func,
+};
 
-const SingleElement = ({ element, onClick, iniValue }) => {
-  const classes = useStyles();
-
-  return <ListItem className={classes.nested}>
-    <ListItemIcon>
-      <Checkbox
-        checked={element.selected}
-        onClick={() => {
-          onClick();
-        }}
-        name="checkedB"
-        color="primary"
-      />
-    </ListItemIcon>
-    <ListItemText primary={element.name} />
-  </ListItem>
+ListElement.defaultProps = {
+  onClick: () => null
 }
 
-export default memo(NestedList);
+export default memo(ListElement);

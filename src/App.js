@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import MainView from './containers/mainView';
+import { GlobalProvider } from './providers';
 
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <MainView />
+      <GlobalProvider>
+        <MainView />
+      </GlobalProvider>
     </React.Fragment>
   );
 }
