@@ -4,12 +4,6 @@ import {
 } from '@testing-library/react';
 import Gallery from '../';
 
-const mockList = [{
-  name: 'title',
-  selected: false,
-  subCategory: []
-}];
-
 const list = [{
   title: 'breed',
   pictures: ['https://images.dog.ceo/breeds/greyhound-italian/n02091032_10079.jpg',
