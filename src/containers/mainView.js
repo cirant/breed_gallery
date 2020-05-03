@@ -75,8 +75,3 @@ const MainView = () => {
 }
 
 export default MainView;
-
-
-
-{/* hound
-plott */ }

@@ -20,16 +20,18 @@ const useStyles = makeStyles((theme) => ({
 const Filter = ({ list, search, handleSelection }) => {
   const classes = useStyles();
 
-  return <List subheader={
-    <ListSubheader >
-      <Button variant="contained" color="primary" onClick={() => search(list)}>
-        Apply filter
+  return (
+    <List subheader={
+      <ListSubheader >
+        <Button variant="contained" color="primary" onClick={() => search(list)}>
+          Apply filter
       </Button>
-    </ListSubheader>
-  }
-    className={classes.list}>
-    {list.map((breed) => <ListElement key={breed.name} element={breed} onClick={handleSelection} />)}
-  </List>
+      </ListSubheader>
+    }
+      className={classes.list}>
+      {list.map((breed) => <ListElement key={breed.name} element={breed} onClick={handleSelection} />)}
+    </List>
+  );
 }
 
 

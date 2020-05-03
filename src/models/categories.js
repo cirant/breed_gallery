@@ -75,6 +75,7 @@ class Category {
     }
 
     return collection.map((breed) => {
+      /* istanbul ignore else */
       if (breed.name === general) {
         return {
           ...breed,
