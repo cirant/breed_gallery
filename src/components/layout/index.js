@@ -102,7 +102,6 @@ function ResponsiveDrawer(props) {
             pictureList.length > 0 && <IconButton aria-label="display more actions"
               edge="end"
               onClick={(event) => {
-                console.log('event', event.currentTarget);
                 if (anchorEl === null)
                   setAnchorEl(event.currentTarget)
                 else
