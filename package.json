@@ -16,9 +16,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "react-scripts test --watchAll=false",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -37,14 +37,9 @@
     ]
   },
   "jest": {
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    }
+    "collectCoverageFrom": [
+      "!src/providers/**.js"
+    ]
   },
   "devDependencies": {
     "jest-mock-axios": "^4.0.0"

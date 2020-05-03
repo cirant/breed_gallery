@@ -12,18 +12,10 @@ import Filter from '../components/filter';
 import Gallery from '../components/gallery';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
   breadcrumbs: {
     color: "white"
   }
 }));
-
 
 const MainView = () => {
   const classes = useStyles();
@@ -69,9 +61,11 @@ const MainView = () => {
     getAllBreerd();
   }, []);
 
-  return <Layout list={getList()} title={getHeaderContent()} >
-    <Gallery pictureList={pictureList} col={column} />
-  </Layout>
+  return (
+    <Layout list={getList()} title={getHeaderContent()} >
+      <Gallery pictureList={pictureList} col={column} />
+    </Layout>
+  )
 }
 
 export default MainView;

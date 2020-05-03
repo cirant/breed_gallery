@@ -43,7 +43,6 @@ const Gallery = ({ pictureList, col, emptyMessage }) => {
       </Typography>
     </Grid>
   </Grid>
-
     : <GridList className={classes.gridList} cols={col}>
       {
         pictureList.map((element) =>

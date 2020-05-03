@@ -6,8 +6,6 @@ import {
 
 
 export const globalReducer = (state, action) => {
-  console.log('dentro de globalReducer', action);
-
   switch (action.type) {
     case actions.SET_COLUMN: {
       return {
