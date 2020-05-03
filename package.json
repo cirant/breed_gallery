@@ -20,7 +20,8 @@
     "prebuild": "react-scripts test --watchAll=false",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint ./src"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "jest-mock-axios": "^4.0.0"
   }
 }
