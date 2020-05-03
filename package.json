@@ -2,6 +2,7 @@
   "name": "dog_catalog",
   "version": "0.1.0",
   "private": true,
+  "author": "Pablo cirant",
   "dependencies": {
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
